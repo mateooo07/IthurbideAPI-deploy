@@ -1,0 +1,6 @@
+@IthurbideAPI_HostAddress = http://localhost:5230
+
+GET {{IthurbideAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
