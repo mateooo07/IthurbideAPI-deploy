@@ -2,10 +2,13 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
-COPY *.csproj ./
-RUN dotnet restore
+# Copiar el csproj de la carpeta del proyecto
+COPY IthurbideAPI/IthurbideAPI.csproj ./IthurbideAPI.csproj
+RUN dotnet restore ./IthurbideAPI.csproj
 
-COPY . ./
+# Copiar todo el proyecto
+COPY IthurbideAPI/ ./IthurbideAPI/
+WORKDIR /src/IthurbideAPI
 RUN dotnet publish -c Release -o /app/publish
 
 # Etapa 2: runtime
@@ -14,4 +17,4 @@ WORKDIR /app
 COPY --from=build /app/publish .
 
 EXPOSE 8080
-ENTRYPOINT ["dotnet", "IthurbideAPI.dll"]  # <-- reemplazar si tu DLL tiene otro nombre
+ENTRYPOINT ["dotnet", "IthurbideAPI.dll"]
